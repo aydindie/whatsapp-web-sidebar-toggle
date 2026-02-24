@@ -41,8 +41,8 @@
   border-radius: 50%;
   background: transparent;
   cursor: pointer;
-  color: var(--icon-high-emphasis, #aebac1);
-  transition: background 0.15s ease;
+  color: var(--icon-lighter, #00a884);
+  transition: background 0.15s ease, color 0.25s ease;
   flex-shrink: 0;
   padding: 0;
   outline: none;
@@ -60,8 +60,14 @@
   transition: transform 0.25s ease;
 }
 
-.wa-toggle-btn.wa-sidebar-is-hidden {
+/* Sidebar visible → green icon (active) */
+.wa-toggle-btn:not(.wa-sidebar-is-hidden) {
   color: var(--icon-lighter, #00a884);
+}
+
+/* Sidebar hidden → dim icon + flipped */
+.wa-toggle-btn.wa-sidebar-is-hidden {
+  color: var(--icon-high-emphasis, #aebac1);
 }
 
 .wa-toggle-btn.wa-sidebar-is-hidden svg {
