@@ -2,6 +2,10 @@
 
 A minimal browser extension that adds a toggle button to hide/show the left sidebar in WhatsApp Web, giving you more screen space for conversations.
 
+![Sidebar visible](screenshot-1-sidebar-open.png)
+
+![Sidebar hidden](screenshot-2-sidebar-hidden.png)
+
 ## Features
 
 - **Toggle button** in the left navigation bar
@@ -11,6 +15,12 @@ A minimal browser extension that adds a toggle button to hide/show the left side
 - **Zero permissions** — no data collection, no background scripts
 
 ## Installation
+
+### Chrome Web Store
+
+*Coming soon*
+
+### Manual (Developer Mode)
 
 1. Clone or download this repository
 2. Open `chrome://extensions` in your browser
@@ -50,6 +60,10 @@ WhatsApp Web uses obfuscated CSS class names that change between deployments. Th
 - `header[data-tab="2"]` — stable attribute for the navigation header
 - Parent/child traversal from known anchors
 
+## Contributing
+
+Contributions are welcome! Feel free to open an issue or submit a pull request.
+
 ## License
 
-MIT
+[MIT](LICENSE)
