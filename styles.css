@@ -1,0 +1,69 @@
+/* Sidebar panel collapse transition */
+.wa-sidebar-panel {
+  transition: width 0.25s ease, min-width 0.25s ease, opacity 0.2s ease;
+  overflow: hidden;
+}
+
+.wa-sidebar-panel.wa-sidebar-hidden {
+  width: 0 !important;
+  min-width: 0 !important;
+  max-width: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  opacity: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* WhatsApp's overlay layer behind the sidebar */
+.wa-sidebar-overlay-hidden {
+  display: none !important;
+}
+
+/* Toggle button wrapper */
+.wa-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+}
+
+/* Toggle button - matches WhatsApp Web nav button style */
+.wa-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  color: var(--icon-high-emphasis, #aebac1);
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+  padding: 0;
+  outline: none;
+}
+
+.wa-toggle-btn:hover {
+  background: var(--background-default-hover, rgba(255, 255, 255, 0.1));
+}
+
+.wa-toggle-btn:active {
+  background: var(--background-default-active, rgba(255, 255, 255, 0.15));
+}
+
+.wa-toggle-btn svg {
+  transition: transform 0.25s ease;
+}
+
+.wa-toggle-btn.wa-sidebar-is-hidden {
+  color: var(--icon-lighter, #00a884);
+}
+
+.wa-toggle-btn.wa-sidebar-is-hidden svg {
+  transform: scaleX(-1);
+}
