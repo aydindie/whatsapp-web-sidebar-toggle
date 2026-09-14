@@ -81,10 +81,23 @@
     }
   }
 
+  /**
+   * WhatsApp sizes the camera preview from a cached layout measurement, so a
+   * panel that changes width while the camera is open keeps the old video
+   * size. A resize event makes WhatsApp remeasure. Fired after the CSS width
+   * transition finishes so it reads the final size.
+   */
+  function notifyLayoutChange() {
+    setTimeout(function () {
+      window.dispatchEvent(new Event("resize"));
+    }, 300);
+  }
+
   function toggleSidebar() {
     isHidden = !isHidden;
     localStorage.setItem(STORAGE_KEY, isHidden);
     applySidebarState();
+    notifyLayoutChange();
   }
 
   /**
