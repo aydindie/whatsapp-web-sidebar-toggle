@@ -10,7 +10,7 @@
     'fill="currentColor"/></svg>';
 
   let sidebarPanel = null;
-  let sidebarOverlay = null;
+  let mediaLayer = null;
   let toggleBtn = null;
   let isHidden = localStorage.getItem(STORAGE_KEY) === "true";
 
@@ -24,22 +24,32 @@
   }
 
   /**
-   * WhatsApp renders a full-width overlay layer behind the sidebar.
-   * When the sidebar is hidden this overlay leaves a visible gray line.
-   * We find it by looking for a sibling of the sidebar panel (inside .two)
-   * that contains a child with the same leading class name.
+   * WhatsApp mounts the media editor and camera view into an absolutely
+   * positioned, full-width layer inside .two. Its inner panel is offset from
+   * the left by the sidebar's width, so with the sidebar hidden the media view
+   * is pushed to the right and leaves the chat area exposed behind it.
+   *
+   * We identify the layer structurally (absolute, spans the viewport, not the
+   * sidebar panel itself) rather than by WhatsApp's generated class names.
    */
-  function findSidebarOverlay(panel) {
+  function findMediaLayer(panel) {
     const twoEl = document.querySelector(".two");
     if (!twoEl || !panel) return null;
 
-    const panelClass = panel.className.split(" ")[0];
     const children = twoEl.children;
+    const twoRect = twoEl.getBoundingClientRect();
 
     for (let i = 0; i < children.length; i++) {
       const child = children[i];
       if (child === panel || child.tagName !== "DIV") continue;
-      if (child.querySelector("." + panelClass)) return child;
+      if (getComputedStyle(child).position !== "absolute") continue;
+
+      // The portal layer spans the full window, starting at the very left
+      // edge — unlike the chat pane, which begins after the nav rail.
+      const rect = child.getBoundingClientRect();
+      if (rect.left > twoRect.left + 1) continue;
+      if (rect.width < twoRect.width - 1) continue;
+      return child;
     }
     return null;
   }
@@ -54,8 +64,12 @@
 
     sidebarPanel.classList.toggle("wa-sidebar-hidden", isHidden);
 
-    if (sidebarOverlay) {
-      sidebarOverlay.classList.toggle("wa-sidebar-overlay-hidden", isHidden);
+    // WhatsApp may re-render the layer, so re-resolve it each time.
+    if (!mediaLayer || !mediaLayer.isConnected) {
+      mediaLayer = findMediaLayer(sidebarPanel);
+    }
+    if (mediaLayer) {
+      mediaLayer.classList.toggle("wa-media-layer-full", isHidden);
     }
 
     if (toggleBtn) {
@@ -127,7 +141,7 @@
     if (!navHeader) return false;
 
     sidebarPanel.classList.add("wa-sidebar-panel");
-    sidebarOverlay = findSidebarOverlay(sidebarPanel);
+    mediaLayer = findMediaLayer(sidebarPanel);
 
     createToggleButton(navHeader);
     applySidebarState();

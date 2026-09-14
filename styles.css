@@ -17,9 +17,17 @@
   overflow: hidden;
 }
 
-/* WhatsApp's overlay layer behind the sidebar */
-.wa-sidebar-overlay-hidden {
-  display: none !important;
+/* Media editor / camera layer.
+   Its inner panel is offset by the sidebar's width; with the sidebar hidden
+   we pull it back to the left edge so it fills the whole chat area. */
+.wa-media-layer-full > div {
+  position: absolute !important;
+  inset: 0 !important;
+  margin: 0 !important;
+  width: auto !important;
+  min-width: 0 !important;
+  max-width: none !important;
+  transform: none !important;
 }
 
 /* Toggle button wrapper */
